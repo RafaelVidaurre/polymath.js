@@ -53,6 +53,7 @@
   },
   "main": "./dist/index.js",
   "scripts": {
+    "test": "jest",
     "start-lint": "esw -w --fix src",
     "lint": "eslint --fix src",
     "typecheck": "flow",
