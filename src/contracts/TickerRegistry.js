@@ -94,13 +94,15 @@ class TickerRegistry extends Contract {
     return tokens
   }
 
-  async registerTicker (details: SymbolDetails): Promise<Web3Receipt> {
+  async registerTicker (details: SymbolDetails, skipApproval: boolean = false): Promise<Web3Receipt> {
     const ipfs: TickerIPFS = { }
     const [fee, swarmHash] = await Promise.all([
       this.registrationFee(),
       IPFS.put(ipfs),
     ])
-    await PolyToken.approve(this.address, fee)
+    if (!skipApproval) {
+      await PolyToken.approve(this.address, fee)
+    }
     return await this._tx(
       this._methods.registerTicker(this.account, details.ticker, details.name, swarmHash),
       null,
