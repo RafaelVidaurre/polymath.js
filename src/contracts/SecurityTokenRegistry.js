@@ -52,7 +52,7 @@ class SecurityTokenRegistry extends Contract {
   }
 
   async generateSecurityToken (token: SecurityToken, skipApproval: boolean = false): Promise<Web3Receipt> {
-    if (skipApproval) {
+    if (!skipApproval) {
       await PolyToken.approve(this.address, await this.registrationFee())
     }
     return await this._tx(
